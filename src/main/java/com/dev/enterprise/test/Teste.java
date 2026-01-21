@@ -10,8 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.dev.enterprise.entities.Client;
 import com.dev.enterprise.entities.Order;
+import com.dev.enterprise.entities.OrderItem;
+import com.dev.enterprise.entities.Product;
 import com.dev.enterprise.repositories.ClientRepository;
+import com.dev.enterprise.repositories.OrderItemRepository;
 import com.dev.enterprise.repositories.OrderRepository;
+import com.dev.enterprise.repositories.ProductRepository;
 
 @Configuration
 @Profile("test")
@@ -22,6 +26,12 @@ public class Teste implements CommandLineRunner{
 
 	@Autowired
 	private OrderRepository orderR;
+	
+	@Autowired
+	private ProductRepository productR;
+	
+	@Autowired
+	private OrderItemRepository orderIR;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -35,6 +45,16 @@ public class Teste implements CommandLineRunner{
 		Order o2 = new Order(null, Instant.parse("2021-11-29T22:31:09Z"), c1 );
 		
 		orderR.saveAll(Arrays.asList(o1,o2));
+		
+		Product p1 = new Product(null, "Notebook", 1950.00, 10);
+		Product p2 = new Product(null, "Iphone 17", 7800.10, 15);
+		
+		productR.saveAll(Arrays.asList(p1,p2));
+		
+		OrderItem oi1 = new OrderItem(o2, p2, 3, 10030.50);
+		OrderItem oi2 = new OrderItem(o1, p1, 2, 7650.55);
+		
+		orderIR.saveAll(Arrays.asList(oi1,oi2));
 		
 	}
 
