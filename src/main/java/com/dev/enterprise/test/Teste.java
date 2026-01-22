@@ -12,6 +12,7 @@ import com.dev.enterprise.entities.Client;
 import com.dev.enterprise.entities.Order;
 import com.dev.enterprise.entities.OrderItem;
 import com.dev.enterprise.entities.Product;
+import com.dev.enterprise.entities.enums.OrderStatus;
 import com.dev.enterprise.repositories.ClientRepository;
 import com.dev.enterprise.repositories.OrderItemRepository;
 import com.dev.enterprise.repositories.OrderRepository;
@@ -41,8 +42,8 @@ public class Teste implements CommandLineRunner{
 		
 		clientR.saveAll(Arrays.asList(c1,c2));
 		
-		Order o1 = new Order(null, Instant.parse("2026-01-20T10:30:00Z"), c1);
-		Order o2 = new Order(null, Instant.parse("2021-11-29T22:31:09Z"), c1 );
+		Order o1 = new Order(null, Instant.parse("2026-01-20T10:30:00Z"), c1, OrderStatus.CONFIRMED);
+		Order o2 = new Order(null, Instant.parse("2021-11-29T22:31:09Z"), c1, OrderStatus.SENT);
 		
 		orderR.saveAll(Arrays.asList(o1,o2));
 		
@@ -51,7 +52,7 @@ public class Teste implements CommandLineRunner{
 		
 		productR.saveAll(Arrays.asList(p1,p2));
 		
-		OrderItem oi1 = new OrderItem(o2, p2, 3, 10030.50);
+		OrderItem oi1 = new OrderItem(o2, p2, 3, 10090.99);
 		OrderItem oi2 = new OrderItem(o1, p1, 2, 7650.55);
 		
 		orderIR.saveAll(Arrays.asList(oi1,oi2));

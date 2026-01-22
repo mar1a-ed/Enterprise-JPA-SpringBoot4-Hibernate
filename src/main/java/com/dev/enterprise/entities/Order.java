@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.dev.enterprise.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,13 +38,16 @@ public class Order implements Serializable{
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
+	private OrderStatus status;
+	
 	public Order() {
 	}
 	
-	public Order(Long id, Instant date, Client client) {
+	public Order(Long id, Instant date, Client client, OrderStatus status) {
 		this.id = id;
 		this.date = date;
 		this.client = client;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -68,11 +73,24 @@ public class Order implements Serializable{
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
+	
+	@JsonIgnore
 	public Set<OrderItem> getItems(){
 		return items;
 	}
 	
+	public Double getTotalPrice() {
+		return items.stream().mapToDouble(x -> x.getSubTotal()).sum();
+	}
+	
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
