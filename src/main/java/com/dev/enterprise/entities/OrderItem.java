@@ -33,6 +33,10 @@ public class OrderItem implements Serializable{
 		return id.getOrder();
 	}
 	
+	public void setOrder(Order order) {
+		this.id.setOrder(order);
+	}
+	
 	public Product getProduct() { //get para acessar informacoes do produto
 		return id.getProduct();
 	}

@@ -19,9 +19,15 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> noSuchElement(NoSuchElementException e, HttpServletRequest request){
 		String error = "Resource not found";
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError sterr = new StandardError(Instant.now(), status.value(), error, "Object does not exist!", request.getRequestURI());
+		StandardError sterr = new StandardError(Instant.now(), status.value(), error, "Resource not found!", request.getRequestURI());
 		return ResponseEntity.status(status).body(sterr);
 	}
 	
-	
+	@ExceptionHandler(DatabasePermissionException.class)
+	public ResponseEntity<StandardError> databaseError(DatabasePermissionException e, HttpServletRequest request){
+		String error = "Database Permission Denied";
+		HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
+		StandardError sterr = new StandardError(Instant.now(), status.value(), error, "Remove other resources!", request.getRequestURI());
+		return ResponseEntity.status(status).body(sterr);
+	}
 }

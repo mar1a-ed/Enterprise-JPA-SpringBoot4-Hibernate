@@ -38,8 +38,8 @@ public class Order implements Serializable{
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
-	private OrderStatus status;
-	
+	private Integer status;
+		
 	public Order() {
 	}
 	
@@ -47,7 +47,7 @@ public class Order implements Serializable{
 		this.id = id;
 		this.date = date;
 		this.client = client;
-		this.status = status;
+		setOrderStatus(status);
 	}
 
 	public Long getId() {
@@ -84,13 +84,15 @@ public class Order implements Serializable{
 	}
 	
 	public OrderStatus getStatus() {
-		return status;
+		return OrderStatus.valueOf(status);
 	}
 
-	public void setStatus(OrderStatus status) {
-		this.status = status;
+	public void setOrderStatus(OrderStatus status) {
+		if(status != null) {
+			this.status = status.getNum();
+		}
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

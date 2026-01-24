@@ -37,8 +37,8 @@ public class Teste implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Client c1 = new Client(null, "Maria Eduarda Corrêa", "mecs@email.com", "12345", "123.456.789-10");
-		Client c2 = new Client(null, "Artur Mandela Flanela", "artigo@email.com", "23187", "213.451.772-12");
+		Client c1 = new Client(null, "Maria Eduarda Corrêa", "mecs@email.com", "12345", "123.456.789-10", "38500-000");
+		Client c2 = new Client(null, "Artur Mandela Flanela", "artigo@email.com", "23187", "213.451.772-12", "74580-900");
 		
 		clientR.saveAll(Arrays.asList(c1,c2));
 		
@@ -52,8 +52,8 @@ public class Teste implements CommandLineRunner{
 		
 		productR.saveAll(Arrays.asList(p1,p2));
 		
-		OrderItem oi1 = new OrderItem(o2, p2, 3, 10090.99);
-		OrderItem oi2 = new OrderItem(o1, p1, 2, 7650.55);
+		OrderItem oi1 = new OrderItem(o2, p2, 3, p2.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p1, 2, p1.getPrice());
 		
 		orderIR.saveAll(Arrays.asList(oi1,oi2));
 		

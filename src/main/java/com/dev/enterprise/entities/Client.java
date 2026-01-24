@@ -33,8 +33,11 @@ public class Client	implements Serializable{
 	@JsonIgnore
 	private String password;
 	
-	@Column(unique = true, nullable = false, length = 14) //tem que ser unico, nao pode ser nulo e capacidade de 11 caracteres
+	@Column(unique = true, length = 14) //tem que ser unico, nao pode ser nulo e capacidade de 14 caracteres
 	private String cpf;
+	
+	@Column(length = 10)
+	private String cep;
 	
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<Order>();
@@ -42,12 +45,13 @@ public class Client	implements Serializable{
 	public Client() {
 	}
 
-	public Client(Long id, String name, String email, String password, String cpf) {
+	public Client(Long id, String name, String email, String password, String cpf, String cep) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.cpf = cpf;
+		this.cep = cep;
 	}
 
 	public Long getId() {
@@ -90,6 +94,15 @@ public class Client	implements Serializable{
 		this.cpf = cpf;
 	}
 	
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	//metodo que mostra o cliente na tabela orders
 	@JsonIgnore //evita looping no request 'get'
 	public List<Order> getOrders(){
 		return orders;
